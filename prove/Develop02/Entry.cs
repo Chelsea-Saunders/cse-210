@@ -12,7 +12,7 @@ public class Entry
     }
 }
 
-//commit to github
+// directions to try from tutor:
 
 //     //attributes
 //     public string date; 

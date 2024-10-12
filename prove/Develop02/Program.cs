@@ -53,8 +53,6 @@ class Program
                     Console.WriteLine("Invalid option: pick a number between 1-5");
                     break;
             }
-
-            //commit to git hub
         }
     }
 }
