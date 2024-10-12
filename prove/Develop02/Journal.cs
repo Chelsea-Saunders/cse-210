@@ -104,10 +104,14 @@ public class Journal
     }      
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 //Commit to github!!
 >>>>>>> 34fd4d5 (Journal program submit)
+=======
+
+>>>>>>> 35927e7 (sync changes and push)
 
 
 

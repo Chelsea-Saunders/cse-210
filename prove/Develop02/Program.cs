@@ -54,10 +54,13 @@ class Program
                     break;
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
             //commit to git hub
 >>>>>>> 34fd4d5 (Journal program submit)
+=======
+>>>>>>> 35927e7 (sync changes and push)
         }
     }
 }

@@ -13,10 +13,14 @@ public class Entry
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // directions to try from tutor:
 =======
 //commit to github
 >>>>>>> 34fd4d5 (Journal program submit)
+=======
+// directions to try from tutor:
+>>>>>>> 35927e7 (sync changes and push)
 
 //     //attributes
 //     public string date; 
