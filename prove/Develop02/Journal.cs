@@ -103,7 +103,11 @@ public class Journal
             }
     }      
 }
+<<<<<<< HEAD
 
+=======
+//Commit to github!!
+>>>>>>> 34fd4d5 (Journal program submit)
 
 
 

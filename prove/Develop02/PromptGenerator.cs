@@ -42,6 +42,10 @@ public class PromptGenerator
     }
 }
 
+<<<<<<< HEAD
+=======
+//commit to github
+>>>>>>> 34fd4d5 (Journal program submit)
 
 //google how to generate a random number in c#
 // prompts[randomNumber (the one you generated)]

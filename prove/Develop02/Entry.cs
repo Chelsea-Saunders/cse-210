@@ -12,7 +12,11 @@ public class Entry
     }
 }
 
+<<<<<<< HEAD
 // directions to try from tutor:
+=======
+//commit to github
+>>>>>>> 34fd4d5 (Journal program submit)
 
 //     //attributes
 //     public string date; 
