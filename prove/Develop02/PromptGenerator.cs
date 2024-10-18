@@ -18,7 +18,7 @@ public class PromptGenerator
             "What is a scripture that impressed itself upon your mind today?  >", 
             "What is a goal you would like to set for yourself for this week?  >",
             "Where do you see yourself in 5 years from now? From 10 years from now?  >",
-            "What is something from this last General Conferencey you want to work on and how will you go about it?  >",
+            "What is something from this last General Conference you want to work on and how will you go about it?  >",
             "If you knew the Savior was coming tomorrow, What would you do different today?  >",
             "If tomorrow was your last day on earth, What would you want to do tomorrow?  >",
             "What was the best part of your  "
