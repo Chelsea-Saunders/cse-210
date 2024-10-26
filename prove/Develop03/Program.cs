@@ -131,3 +131,10 @@ class Program
         }
     }
 }
+
+
+// i got a lot of help in the outline from a tutor and then worked 
+//with ai/chatgpt to figure out what i was doing. By the end I was amazed i 
+//actually felt like I was getting the hand of some of it....i have a long way to go!!
+// https://chatgpt.com/share/671c517a-ac0c-800b-ab3a-9acfe26110f9
+//https://chatgpt.com/c/671be21b-c9cc-800b-bbfb-74dce7e1ae5f
