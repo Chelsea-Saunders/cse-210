@@ -14,3 +14,5 @@ class Program
         Console.WriteLine(writingAssignment1.GetWritingInformation());
     }
 }
+
+// https://chatgpt.com/c/6723dfd6-abe8-800b-a46a-3e9cf915791d
