@@ -39,41 +39,41 @@ public class ReflectingActivity : Activity
     }
 
         public void StartReflectingActivity()
-    {
-        Console.WriteLine(StartMessage());
-        SetActivityTime();
-
-        Console.Clear();
-        Console.WriteLine("Get ready...");
-        Spinner(2);
-
-        Random rand = new Random();
-
-        if (_availablePrompts.Count == 0)
         {
-            _availablePrompts = new List<string>(_randomPrompt);
-        }
+            Console.WriteLine(StartMessage());
+            SetActivityTime();
 
-        int randomIndex = rand.Next(_availablePrompts.Count);
-        string mainPrompt = _availablePrompts[randomIndex];
-        _availablePrompts.RemoveAt(randomIndex);
+            Console.Clear();
+            Console.WriteLine("Get ready...");
+            Spinner(2);
 
-        Console.WriteLine("Reflect on these questons and how they relate to your experience:  ");
-        Spinner(3);
-        Console.WriteLine(mainPrompt);
-        Spinner(5);
+            Random rand = new Random();
 
-        DateTime endTime = DateTime.Now.AddSeconds(_setActivityTime);
-        int reflectionIndex = 0;
+            if (_availablePrompts.Count == 0)
+            {
+                _availablePrompts = new List<string>(_randomPrompt);
+            }
 
-        while (DateTime.Now < endTime)
-        {
-            Console.WriteLine(_reflectionPrompt[reflectionIndex]);
+            int randomIndex = rand.Next(_availablePrompts.Count);
+            string mainPrompt = _availablePrompts[randomIndex];
+            _availablePrompts.RemoveAt(randomIndex);
+
+            Console.WriteLine("Reflect on these questons and how they relate to your experience:  ");
+            Spinner(3);
+            Console.WriteLine(mainPrompt);
             Spinner(5);
 
-            reflectionIndex = (reflectionIndex + 1) % _reflectionPrompt.Count;
+            DateTime endTime = DateTime.Now.AddSeconds(_setActivityTime);
+            int reflectionIndex = 0;
+
+            while (DateTime.Now < endTime)
+            {
+                Console.WriteLine(_reflectionPrompt[reflectionIndex]);
+                Spinner(5);
+
+                reflectionIndex = (reflectionIndex + 1) % _reflectionPrompt.Count;
+            }
+            Console.WriteLine("Well done!");
+            Console.WriteLine(EndMessage());
         }
-        Console.WriteLine("Well done!");
-        Console.WriteLine(EndMessage());
-    }
 }
