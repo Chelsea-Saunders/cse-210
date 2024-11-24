@@ -14,3 +14,15 @@ class Program
         //trying the push by typing in the terminal...because its new to me...
     }
 }
+
+//this i did on my own reviewing what I had learned:
+
+//         Console.WriteLine("Hello Prep1 World!");
+
+//         Console.WriteLine("What is your first name?  ");
+//         string fname = Console.ReadLine();
+        
+//         Console.WriteLine("What is your last name?  ");
+//         string lname = Console.ReadLine();
+
+//         Console.WriteLine($"Your name is {lname}, {fname} {lname}.");
