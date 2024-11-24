@@ -1,3 +1,6 @@
-SimpleGoal|sleep|daily|150|True
-EternalGoal|walk|daily|50|1
-ChecklistGoal|jump|hourly|100|500|3|3
+SimpleGoal|run|daily|50|False
+EternalGoal|walk|hourly|100|0
+ChecklistGoal|jump|weekly|75|200|3|0
+SimpleGoal|walk|hourly|50|False
+EternalGoal|jump|daily|100|0
+ChecklistGoal|jump|weekly|75|500|2|0

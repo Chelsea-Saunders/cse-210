@@ -242,7 +242,7 @@ public class Program
             if (goalType == "SimpleGoal")
             {
                 int points = int.Parse(parts[3]);
-                bool completed = bool.Parse(parts[4]);
+                bool completed = parts[4] == "1";
                 goalsList.Add(new SimpleGoal(goalName, description, points) {Completed = completed});
             }
             else if (goalType == "ChecklistGoal")
@@ -263,49 +263,10 @@ public class Program
             else if (goalType == "EternalGoal")
             {
                 int points = int.Parse(parts[3]);
-                bool completed = bool.Parse(parts[4]);
-                goalsList.Add(new EternalGoal(goalName, description, points) {Completed = completed});
+                goalsList.Add(new EternalGoal(goalName, description, points));
             }
         }
-        foreach (var goal in goalsList)
-        {
-            Console.WriteLine(goal.DisplayGoal());
-        }
-        Console.WriteLine("Goals successfully loaded.");
     }
-            // int points = int.Parse(parts[3]);  //number of points assigned to goal
-            // bool completed = bool.Parse(parts[4]);//completion of goal
-
-            // if (goalType == "SimpleGoal")
-            // {
-            //     goalsList.Add(new SimpleGoal(goalName, description, points) {Completed = completed});
-            // }
-            // else if (goalType == "ChecklistGoal")
-            // {
-            //     // int checklistPoints = points;
-            //     int bonusPoints = int.Parse(parts[4]);//additional bonus points
-            //     int totalCount = int.Parse(parts[5]); //total count
-            //     int completedCount = int.Parse(parts[6]); //how manytimes completed
-
-            //     ChecklistGoal checklistGoal = new ChecklistGoal(goalName, description, checklistPoints, bonusPoints, totalCount);
-
-        //         for (int i = 0; i < completedCount; i++)
-        //         {
-        //             checklistGoal.ProgressRecorded();
-        //         }
-        //         goalsList.Add(checklistGoal);
-        //     }
-        //     else if (goalType == "EternalGoal")
-        //     {
-        //         goalsList.Add(new EternalGoal(goalName, description, points) {Completed = bool.Parse(parts[4]) });
-        //     }
-        // }
-        // foreach (var goal in goalsList)
-        // {
-        //     Console.WriteLine(goal.DisplayGoal());
-        // }
-        // Console.WriteLine("Goals successfully loaded.");
-    // }
     static void RecordEvent()
     {
         if (goalsList.Count == 0)
