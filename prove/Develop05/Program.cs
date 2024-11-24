@@ -310,3 +310,6 @@ public class Program
     return true; // All SimpleGoal and ChecklistGoal are completed
 }
 }
+
+// https://chatgpt.com/share/6742ea12-6910-800b-b640-6c1abb2679b9
+// https://chatgpt.com/share/6742ea52-5034-800b-a11f-a00a3375ab06
