@@ -20,3 +20,5 @@ namespace DesertRainSoap.Models
         }
     }
 }
+
+//Naniniwala ko kayo!! kaya ka nga!!
