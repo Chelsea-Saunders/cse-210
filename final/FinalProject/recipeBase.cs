@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using DesertRainSoap.Data;
 
 namespace DesertRainSoap.Models
@@ -37,15 +38,6 @@ namespace DesertRainSoap.Models
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(DesiredTotalWeight), "Please enter a positive number.");
                     _desiredTotalWeight = value;
-                
-                // if (Unit == WeightUnit.Percentage)
-                // {
-                //     _desiredTotalWeight = value;
-                // }
-                // else
-                // {
-                //     _desiredTotalWeight = value;
-                // }
             }
         }
         public double Water
@@ -146,8 +138,28 @@ namespace DesertRainSoap.Models
         {
             return UnitConverter.FormatWeight(weight, Unit);
         }
+        public void AddAdditive(string name, double weight)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException($"Please enter a name. {nameof(name)}");
 
+            if (weight <= 0)
+                throw new ArgumentOutOfRangeException(nameof(weight), "Additive must be a positive number.");
 
+            _additives.Add(new Ingredient(name, weight));
+        }
+        public static class StringUtility
+        {
+            public static string ToTitleCase(string input)
+            {
+                if (string.IsNullOrEmpty(input)) return input;
+                return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(input.ToLower());
+            }
+        }
+        public void ClearIngredients()
+        {
+            _ingredients.Clear();
+        }
         public override string ToString()
         {
             return $"{Name} - {_ingredients.Count} ingredients - Total Weight: {ConvertWeight(GetTotalWeight(), Unit):0.00} {Unit}";
@@ -161,16 +173,6 @@ namespace DesertRainSoap.Models
                 WeightUnit.Percentage => throw new InvalidOperationException("Cannot directly convert percentage to weight. Handle percentage in the AddIngredient method."), // convert to %
                 _ => weight,
             };
-        }
-        public void AddAdditive(string name, double weight)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException($"Please enter a name. {nameof(name)}");
-
-            if (weight <= 0)
-                throw new ArgumentOutOfRangeException(nameof(weight), "Additive must be a positive number.");
-
-            _additives.Add(new Ingredient(name, weight));
         }
     }
 }

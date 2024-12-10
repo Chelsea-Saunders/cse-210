@@ -5,20 +5,18 @@ namespace DesertRainSoap.Data
 {
     public static class SAPValues
     {
-        public static readonly Dictionary<string, double> Values = new Dictionary<string, double>
+        public static readonly Dictionary<string, double> Values = new Dictionary<string, double> (StringComparer.OrdinalIgnoreCase)
         {
             {"Almond Butter", 0.134},
-            {"Almond Oil, Sweet", 0.139},
+            {"Almond Oil", 0.139},
             {"Aloe Butter",	0.171},
             {"Apricot Kernel Oil", 0.135},
             {"Argan Oil", 0.135},
             {"Avocado Butter", 0.133},
             {"Avocado Oil", 0.133},
-            {"Babassu Oil", 0.178},
-            {"Baobab Oil", 0.143},
             {"Beeswax", 0.067},
             {"Borage Oil", 0.135},
-            {"Canola Oil (Rapeseed)", 0.133},
+            {"Canola Oil", 0.133},
             {"Castor Oil", 0.128}, 
             {"Cocoa Butter", 0.138}, 
             {"Coconut Oil", 0.183},
@@ -31,7 +29,7 @@ namespace DesertRainSoap.Data
             {"Cupuacu Butter", 0.137},
             {"Emu Oil", 0.135},
             {"Evening Primrose Oil", 0.135},
-            {"Flax Oil (Linseed)", 0.135},
+            {"Flax Oil", 0.135},
             {"Ghee", 0.162},
             {"Goose Fat", 0.137},
             {"Grapeseed Oil", 0.137},
@@ -43,11 +41,11 @@ namespace DesertRainSoap.Data
             {"Kokum Butter", 0.135},
             {"Kpangnan Butter", 0.135},
             {"Kukui Nut Oil", 0.135},
-            {"Lanolin Liquid Wax", 0.076},
+            {"Lanolin", 0.076},
             {"Lard", 0.141},
             {"Laurel Fruit Oil", 0.141},
             {"Lauric Acid", 0.200},
-            {"Linseed Oil (Flax)", 0.135},
+            {"Linseed Oil", 0.135},
             {"Loofa Seed Oil", 0.133},
             {"Macadamia Nut Butter", 0.134},
             {"Macadamia Nut Oil", 0.139},
@@ -70,7 +68,7 @@ namespace DesertRainSoap.Data
             {"Palm Kernel Oil", 0.178},
             {"Palm Kernel Oil Flakes", 0.178},
             {"Palm Oil", 0.142},
-            {"Papaya Seed Oil (Carica papaya)", 0.113},
+            {"Papaya Seed Oil", 0.113},
             {"Passion Fruit Seed Oil", 0.130},
             {"Peach Kernel Oil", 0.135},
             {"Peanut Oil", 0.137},
@@ -84,7 +82,6 @@ namespace DesertRainSoap.Data
             {"Red Palm Butter", 0.142},
             {"Rice Bran Oil", 0.133},
             {"Rosehip Oil", 0.133},
-            {"Sacha Inchi (Plukenetia volubilis)", 0.134},
             {"Safflower Oil", 0.137},
             {"Safflower Oil (High Oleic)", 0.137},
             {"Sal Butter", 0.132},
@@ -100,11 +97,10 @@ namespace DesertRainSoap.Data
             {"Stearic Acid", 0.153},
             {"Sunflower Oil", 0.135},
             {"Sunflower Oil (High Oleic)", 0.135},
-            {"Tallow (Beef)", 0.143},
+            {"Tallow", 0.143},
             {"Tucuma Seed Butter", 0.170},
             {"Walnut Oil", 0.135},
             {"Wheat Germ Oil", 0.130},
-            {"Yangu (Cape Chestnut)", 0.134},
         };
     }
 }

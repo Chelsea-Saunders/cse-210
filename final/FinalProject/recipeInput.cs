@@ -34,5 +34,3 @@ namespace DesertRainSoap
         }
     }
 }
-
-//Naniniwala ko kayo!! kaya ka nga!!

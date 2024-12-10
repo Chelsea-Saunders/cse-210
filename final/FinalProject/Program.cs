@@ -54,8 +54,8 @@ namespace DesertRainSoap
 
             // step 4: get total oil weight
             double totalWeight = RecipeInput.GetWeight("Total weight of oils :  ");
-            myRecipe.DesiredTotalWeight = totalWeight;
-
+                            myRecipe.DesiredTotalWeight = totalWeight;
+            
             // step 5: get water amount
             double waterWeight = UserInputHandler.GetWaterAmount(myRecipe);
             myRecipe.Water = waterWeight;
@@ -71,24 +71,17 @@ namespace DesertRainSoap
 
             oilInputHandler.AddOils(myRecipe, totalWeight, myRecipe.Unit);
 
-            //step 8: add additives
-            // AdditiveInputHandler.AdditiveInputHandler = new AdditiveInputHandler();
-            // AdditiveInputHandler.AddAdditive(myRecipe, totalWeight);
+            // step 8: add additives
+            var additiveInputHandler = new AdditiveHandler();
+            additiveInputHandler.AddAdditive(myRecipe, totalWeight);
 
-            //step 9: add fragrance
-            // AdditiveInputHandler additiveInputHandler = new AdditiveInputHandler();
-            // additiveInputHandler.AddFragrance(myRecipe, totalWeight);
+            // step 9: add fragrance
+            var additiveHandler = new AdditiveHandler();
+            additiveInputHandler.AddFragrance(myRecipe, totalWeight);
 
             // final recipe summary
             IRecipeFormatter recipeFormatter = new RecipeSummaryDisplay();
             recipeFormatter.DisplayRecipeSummary(myRecipe, superFat);
-            foreach (var additive in myRecipe.Additives)
-            {
-                Console.WriteLine($"{additive.Name}: {additive.Weight:0.00} oz");
-            }
-            //add summary for fragrance
         }
     }
 }
-
-//Naniniwala ko kayo!! kaya ka!!

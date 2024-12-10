@@ -4,7 +4,7 @@ namespace DesertRainSoap.Data
 {
     public static class Additive
     {
-        public static readonly Dictionary<string, double> Values = new Dictionary<string, double>
+        public static readonly Dictionary<string, double> Values = new Dictionary<string, double> (StringComparer.OrdinalIgnoreCase)
         {
             {"Activated Charcoal", 1},
             {"Aloe Vera", 0.5},

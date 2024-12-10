@@ -12,5 +12,3 @@ namespace DesertRainSoap.Interfaces
         void DisplayRecipeSummary(RecipeBase recipe, double superFat);
     }
 }
-
-//Naniniwala ko kayo!! kaya ka nga!!

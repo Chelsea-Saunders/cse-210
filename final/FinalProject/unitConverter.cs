@@ -15,19 +15,19 @@ namespace DesertRainSoap.Models
         {
             return ounces * OuncesToPounds;
         }
-        // public static double ConvertFromGrams(double grams)
-        // {
-        //     return grams / 28.3495;
-        // }
-        // public static double ConvertFromPounds(double pounds)
-        // {
-        //     return pounds * 16.0;
-        // }
+        public static double ConvertFromGrams(double grams)
+        {
+            return grams / 28.3495;
+        }
+        public static double ConvertFromPounds(double pounds)
+        {
+            return pounds * 16.0;
+        }
         public static string FormatWeight(double weight, WeightUnit unit)
         {
             return unit switch
             {
-                WeightUnit.Ounces => $"{weight:0.00} oz", 
+                WeightUnit.Ounces => $"{weight:0.00} oz",
                 WeightUnit.Grams => $"{ConvertToGrams(weight):0.00} g",
                 WeightUnit.Pounds => $"{ConvertToPounds(weight):0.00} lb",
                 _ => $"{weight:0.00}oz" //default to oz
@@ -35,5 +35,3 @@ namespace DesertRainSoap.Models
         }
     }
 }
-
-//Naniniwala ko kayo!! kaya ka nga!!
