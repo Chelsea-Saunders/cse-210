@@ -104,5 +104,3 @@ namespace DesertRainSoap.Data
         };
     }
 }
-
-//Naniniwala ko kayo!! kaya ka!!

@@ -6,7 +6,7 @@ namespace DesertRainSoap.Handlers
 {
     public class RecipeSummaryDisplay : Interfaces.IRecipeFormatter 
     {
-        public void DisplayRecipeSummary(RecipeBase myRecipe, double superFat)
+        public void DisplayRecipeSummary(RecipeBase myRecipe, double superFat, double totalOilWeight, double tspInput)
         {
             Console.WriteLine($"\nRecipe: {RecipeBase.StringUtility.ToTitleCase(myRecipe.Name)}");
             Console.WriteLine($"Total oil weight: {myRecipe.FormatWeight(myRecipe.DesiredTotalWeight)}");// total soap weight
@@ -38,7 +38,7 @@ namespace DesertRainSoap.Handlers
                 }
                 else
                 {
-                    double additiveInTsp = AdditiveHandler.ConvertToTeaspoons(additives.Weight);
+                    double additiveInTsp = AdditiveHandler.ConvertToTeaspoons(totalOilWeight, tspInput);
                     Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(additives.Name)}: {additiveInTsp:0.00} tsp");
                 }
             }

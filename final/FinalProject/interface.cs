@@ -9,6 +9,6 @@ namespace DesertRainSoap.Interfaces
 
     public interface IRecipeFormatter
     {
-        void DisplayRecipeSummary(RecipeBase recipe, double superFat);
+        void DisplayRecipeSummary(RecipeBase recipe, double superFat, double totalOilWeight, double tspInput);
     }
 }

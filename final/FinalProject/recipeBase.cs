@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO.Enumeration;
 using DesertRainSoap.Data;
 
 namespace DesertRainSoap.Models
@@ -184,6 +185,34 @@ namespace DesertRainSoap.Models
         {
             return $"{Name} - {_ingredients.Count} ingredients - Total Weight: {ConvertWeight(GetTotalWeight(), WeightUnit.Ounces, Unit):0.00} {Unit}";
         }
+
+        //save to file
+        public void SaveFile(string fileName, List<string> recipe)
+        {
+            Console.WriteLine("Would you like to save this recipe to a file? (yes/no):  ");
+            string saveInput = Console.ReadLine()?.Trim().ToLower();
+
+            if (saveInput == "yes")
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(fileName))
+                    {
+                        Console.WriteLine("Invalid name. File not saved. ");
+                        return;
+                    }
+                    File.WriteAllLines(fileName, recipe);
+                    Console.WriteLine($"Recipe saved to {fileName}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error saving file: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Recipe did not save.");
+            }
+        }
     }
-    
 }
