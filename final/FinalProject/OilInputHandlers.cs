@@ -65,66 +65,83 @@ namespace DesertRainSoap.Handlers
     {
         public void AddOils(RecipeBase recipe, double totalWeight, WeightUnit unit)
         {
-            Console.WriteLine($"You chose weight-based oil input of {UnitConverter.FormatWeight(totalWeight, unit)}.");
-            double totalOilWeight = 0;
-
-            foreach (var oil in SAPValues.Values.Keys)
+            while (true)
             {
-                Console.WriteLine(oil);
-            }
-            while (totalOilWeight < totalWeight)
-            {
-            // double remainingWeight = totalWeight - totalOilWeight;
-            Console.WriteLine("Available oils:");
-            
-                Console.WriteLine("Enter oil name (or type 'done' to quit):  ");
-                string oilName = Console.ReadLine()?.Trim() ?? string.Empty;
+                Console.WriteLine($"You chose weight-based oil input of {UnitConverter.FormatWeight(totalWeight, unit)}.");
+                double totalOilWeight = 0;
 
-                if (oilName.Equals("done", StringComparison.OrdinalIgnoreCase))
+                Console.WriteLine("Available oils:");
+                foreach (var oil in SAPValues.Values.Keys)
                 {
-                    if (totalOilWeight < totalWeight)
+                    Console.WriteLine(oil);
+                }
+                while (totalOilWeight < totalWeight)
+                {            
+                    Console.WriteLine("Enter oil name (or type 'done' to quit):  ");
+                    string oilName = Console.ReadLine()?.Trim() ?? string.Empty;
+
+                    if (oilName.Equals("done", StringComparison.OrdinalIgnoreCase))
                     {
-                        double newRemainingWeight = totalWeight - totalOilWeight;
-                        Console.WriteLine($"You still need to add {UnitConverter.FormatWeight(newRemainingWeight, unit)} more oils.");
+                        Console.Clear();
+                        Console.WriteLine("Resetting oil input...");
+                        totalOilWeight = 0;
+                        recipe.ClearIngredients();
+                        break;
+                    }
+
+                    if (!SAPValues.Values.ContainsKey(oilName))
+                    {
+                        Console.WriteLine("Invalid oil name.");
                         continue;
                     }
-                    break;
-                }
-                if (!SAPValues.Values.ContainsKey(oilName))
-                {
-                    Console.WriteLine("Invalid oil name.");
-                    continue;
-                }
-                double remainingWeight = totalWeight - totalOilWeight;
-                Console.WriteLine($"How much({oilName}) would you like to add? (Remaining: {UnitConverter.FormatWeight(remainingWeight, unit)}):  ");
+                    double remainingWeight = totalWeight - totalOilWeight;
 
-                if (double.TryParse(Console.ReadLine(), out double weight) && weight > 0)
-                {
-                    double weightInOunces = unit switch
+                    if (unit == WeightUnit.Percentage)
                     {
-                        WeightUnit.Grams => UnitConverter.ConvertFromGrams(weight), 
-                        WeightUnit.Pounds => UnitConverter.ConvertFromPounds(weight),
-                        _ => weight //default to oz
-                    };
+                        Console.WriteLine($"What percentage of {oilName} would you like to add? (Remaining: {100 - totalOilWeight}%):  ");
 
-                    if (weightInOunces <= remainingWeight)
-                {
-                    recipe.AddIngredient(new Ingredient(oilName, weightInOunces));
-                    totalOilWeight += weightInOunces;
-
-                    Console.WriteLine($"Added {UnitConverter.FormatWeight(weight, unit)} of {oilName}.");
+                        if (double.TryParse(Console.ReadLine(), out double percentage) && percentage > 0 && totalOilWeight + percentage <= 100)
+                        {
+                            double weightInOunces = (percentage / 100) * recipe.DesiredTotalWeight;
+                            recipe.AddIngredient(new Ingredient(oilName, weightInOunces));
+                            totalOilWeight += percentage;//increment by % not weight
+                            Console.WriteLine($"Added {percentage}% ({UnitConverter.FormatWeight(weightInOunces, WeightUnit.Ounces)} of {oilName})");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Input can't exceed remainint total.");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine($"You cannot add more than {UnitConverter.FormatWeight(remainingWeight, unit)} of {oilName}.");
+                        //handle weight based input
+                        Console.WriteLine($"How much ({oilName}) would you like to add? (Remaining: {UnitConverter.FormatWeight(remainingWeight, unit)}):  ");
+
+                        if (double.TryParse(Console.ReadLine(), out double weight) && weight > 0)
+                        {
+                            if (weight <= remainingWeight)
+                            {
+                                recipe.AddIngredient(new Ingredient(oilName, weight));
+                                totalOilWeight += weight;
+                                Console.WriteLine($"Added {UnitConverter.FormatWeight(weight, unit)} of {oilName}.");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"You cannot add more than {UnitConverter.FormatWeight(remainingWeight, unit)} of {oilName}.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Please enter a valid weight in {unit}.");
+                        }
                     }
                 }
-                else
+                if (totalOilWeight == totalWeight || totalOilWeight >= totalWeight)
                 {
-                    Console.WriteLine($"Please enter a valid weight in {unit}.");
+                    Console.WriteLine($"oil input: complete.");
+                    break;
                 }
-            }
-            Console.WriteLine($"Recipe Build: complete.");
+            } 
         }
     }
 }

@@ -27,9 +27,6 @@ namespace DesertRainSoap
             Console.WriteLine("2. Potassium Hydroxide(KOH)");
             string lyeInput = Console.ReadLine();
 
-            // myRecipe.Lye = lyeInput == "2" ? LyeType.PotassiumHydroxide : LyeType.SodiumHydroxide;
-            // Console.WriteLine($"Lye type chosen: {myRecipe.Lye}");
-
             if (lyeInput == "2")
             {
                 myRecipe.Lye = LyeType.PotassiumHydroxide;
@@ -46,15 +43,22 @@ namespace DesertRainSoap
                 myRecipe.Lye = LyeType.SodiumHydroxide;
             }
 
-            // Console.WriteLine($"Lye type chosen: {myRecipe.Lye}");
-
             // step 3: select unit of measurement
             myRecipe.Unit = UserInputHandler.GetWeightUnit();
             Console.WriteLine($"Using {myRecipe.Unit}");
 
-            // step 4: get total oil weight
-            double totalWeight = RecipeInput.GetWeight("Total weight of oils :  ");
-                            myRecipe.DesiredTotalWeight = totalWeight;
+            // step 4: get total oil weight or %
+            double enteredWeight = RecipeInput.GetWeight(myRecipe.Unit == WeightUnit.Percentage
+                ?"Enter the total base oil weight:  "
+                : "Total weight of oils: ");
+
+            // convert entered weight based on unit
+            myRecipe.DesiredTotalWeight = myRecipe.Unit switch
+            {
+                WeightUnit.Percentage => enteredWeight,
+                _ => enteredWeight // default to oz
+            };
+            Console.WriteLine($"Total oil weight: {UnitConverter.FormatWeight(myRecipe.DesiredTotalWeight, myRecipe.Unit)}");
             
             // step 5: get water amount
             double waterWeight = UserInputHandler.GetWaterAmount(myRecipe);
@@ -69,15 +73,14 @@ namespace DesertRainSoap
                 ? new PercentageOilInputHandler()
                 : new WeightOilInputHandler();
 
-            oilInputHandler.AddOils(myRecipe, totalWeight, myRecipe.Unit);
+            oilInputHandler.AddOils(myRecipe, myRecipe.DesiredTotalWeight, myRecipe.Unit);
 
             // step 8: add additives
             var additiveInputHandler = new AdditiveHandler();
-            additiveInputHandler.AddAdditive(myRecipe, totalWeight);
+            additiveInputHandler.AddAdditive(myRecipe, myRecipe.DesiredTotalWeight);
 
             // step 9: add fragrance
-            var additiveHandler = new AdditiveHandler();
-            additiveInputHandler.AddFragrance(myRecipe, totalWeight);
+            additiveInputHandler.AddFragrance(myRecipe, myRecipe.DesiredTotalWeight);
 
             // final recipe summary
             IRecipeFormatter recipeFormatter = new RecipeSummaryDisplay();

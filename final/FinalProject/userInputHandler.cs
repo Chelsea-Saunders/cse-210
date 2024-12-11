@@ -5,25 +5,33 @@ namespace DesertRainSoap.Handlers
 {
     public class UserInputHandler
     {
-        public static WeightUnit GetWeightUnit()
+        public static WeightUnit GetWeightUnit(string input = null)
         {
-            Console.WriteLine("Which weight unit would you like to use: ");
-            Console.WriteLine("1. Ounces (default)");
-            Console.WriteLine("2. Pounds");
-            Console.WriteLine("3. Grams");
-            Console.WriteLine("4. Percentage (%)");
-            string input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input))
+            {
+                Console.WriteLine("Which weight unit would you like to use: ");
+                Console.WriteLine("1. Ounces (default)");
+                Console.WriteLine("2. Pounds");
+                Console.WriteLine("3. Grams");
+                Console.WriteLine("4. Percentage (%)");
+                input = Console.ReadLine();
+            }
 
-            // Return the selected unit
+            input = input?.Trim().ToLower();
             return input switch
             {
                 "1" => WeightUnit.Ounces,
                 "2" => WeightUnit.Pounds,
                 "3" => WeightUnit.Grams,
                 "4" => WeightUnit.Percentage,
+                "oz" or "ounce" or "ounces" => WeightUnit.Ounces,
+                "lb" or "pound" or "pounds" => WeightUnit.Pounds,
+                "g" or "gram" or "grams" => WeightUnit.Grams,
+                "%" or "percent" or "percentage" => WeightUnit.Percentage,
                 _ => WeightUnit.Ounces // Default to ounces
             };
         }
+
         public static double GetWaterAmount(RecipeBase recipe)
         {
             Console.WriteLine("What % of water would you like to use? (press enter for default (38%)):  ");

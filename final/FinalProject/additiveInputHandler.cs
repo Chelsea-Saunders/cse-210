@@ -33,17 +33,24 @@ namespace DesertRainSoap.Handlers
                         continue;
                     }
 
-                    //check if additive already exists
+                    //duplicates?
                     if (recipe.Additives.Any(a => a.Name.Equals(additiveName, StringComparison.OrdinalIgnoreCase)))
                     {
                         Console.WriteLine($"{additiveName} has already been added.");
                         continue;
                     }
-                    Console.WriteLine($"How many tsp/lb of oils of {additiveName} (check your fragrance/essential oil label for suggested usage in soap):  ");
+                    Console.WriteLine($"How many tsp/lb of {additiveName}:  ");
                     if (double.TryParse(Console.ReadLine(), out double tspPerLb) && tspPerLb > 0)
                     {
-                        //calculate total additive weight in tsp
-                        double totalAdditiveWeight = tspPerLb * (totalWeight /  16.0); // convert total weight to lbs
+                        //convert total oil wieght to lbs
+                        // double totalWeightInOunces = totalWeight;
+                        double totalWeightInPounds = totalWeight /  16.0; // convert total weight to lbs
+
+                        // calculate total additve weight in tsp
+                        double totalAdditiveWeight = tspPerLb * totalWeightInPounds;
+
+                        //round
+                        totalAdditiveWeight = Math.Round(totalAdditiveWeight, 2);
 
                         //title case the additive name
                         string titleCaseAdditiveName = char.ToUpper(additiveName[0]) + additiveName.Substring(1);
@@ -77,7 +84,7 @@ namespace DesertRainSoap.Handlers
                     return;
                 }
 
-                Console.WriteLine("How many oz/lb of oils would you like to add:  ");
+                Console.WriteLine("How many oz/lb of oils would you like to add (Check fragrance/essential oil bottle for recommended amounts in soap):  ");
                 if (double.TryParse(Console.ReadLine(), out double ozPerLb) && ozPerLb > 0)
                 {
                     //caclulate total frag weight
@@ -97,8 +104,12 @@ namespace DesertRainSoap.Handlers
                 Console.WriteLine("No fragrance/essential oils added.");
             }
         }
+        public static double ConvertToTeaspoons(double weightInOunces)
+        {
+            const double OuncesPerTeaspoon = 0.166666667;
+            double teaspoons = weightInOunces / OuncesPerTeaspoon;
+
+            return weightInOunces / OuncesPerTeaspoon;
+        }
     }
 }   
- 
-
-//Naniniwala ko kayo!! kaya ka!! 

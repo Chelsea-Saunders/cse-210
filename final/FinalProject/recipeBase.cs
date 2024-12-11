@@ -81,7 +81,6 @@ namespace DesertRainSoap.Models
             }
             _ingredients.Add(ingredient);
         }
-
         public double GetTotalWeight()
         {
             double totalWeight = 0;
@@ -90,6 +89,27 @@ namespace DesertRainSoap.Models
                 totalWeight += ingredient.Weight;
             }
             return totalWeight;
+        }
+        private double ConvertWeight(double weight, WeightUnit fromUnit, WeightUnit toUnit)
+        {
+            if (fromUnit == toUnit)
+                return weight;
+
+            double weightInOunces = fromUnit switch
+            {
+                WeightUnit.Ounces => weight,
+                WeightUnit.Grams => weight / 28.3495, 
+                WeightUnit.Pounds => weight * 16.0, 
+                 _ => throw new NotSupportedException("Conversion from {fromUnit} not supported.")
+            };
+
+            return toUnit switch
+            {
+                WeightUnit.Ounces => weightInOunces,
+                WeightUnit.Grams => weightInOunces * 28.3495,
+                WeightUnit.Pounds => weightInOunces / 16.0,
+                _ => throw new NotSupportedException("Conversion to {toUnit} not supported.")
+            };
         }
 
         public void ScaleIngredientsToTotalWeight()
@@ -162,19 +182,8 @@ namespace DesertRainSoap.Models
         }
         public override string ToString()
         {
-            return $"{Name} - {_ingredients.Count} ingredients - Total Weight: {ConvertWeight(GetTotalWeight(), Unit):0.00} {Unit}";
-        }
-        private double ConvertWeight(double weight, WeightUnit unit)
-        {
-            return unit switch{
-                WeightUnit.Ounces => weight,
-                WeightUnit.Grams => weight * 28.3495, // 1 oz = 28.3495 g
-                WeightUnit.Pounds => weight / 16.0, //16 oz = 1 lb
-                WeightUnit.Percentage => throw new InvalidOperationException("Cannot directly convert percentage to weight. Handle percentage in the AddIngredient method."), // convert to %
-                _ => weight,
-            };
+            return $"{Name} - {_ingredients.Count} ingredients - Total Weight: {ConvertWeight(GetTotalWeight(), WeightUnit.Ounces, Unit):0.00} {Unit}";
         }
     }
+    
 }
-
-//Naniniwala ko kayo!! kaya ka!!

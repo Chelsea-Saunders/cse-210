@@ -17,7 +17,7 @@ namespace DesertRainSoap.Models
         }
         public static double ConvertFromGrams(double grams)
         {
-            return grams / 28.3495;
+            return grams / OuncesToGrams;
         }
         public static double ConvertFromPounds(double pounds)
         {
@@ -28,10 +28,10 @@ namespace DesertRainSoap.Models
             return unit switch
             {
                 WeightUnit.Ounces => $"{weight:0.00} oz",
-                WeightUnit.Grams => $"{ConvertToGrams(weight):0.00} g",
-                WeightUnit.Pounds => $"{ConvertToPounds(weight):0.00} lb",
+                WeightUnit.Grams => $"{weight:0.00} g",
+                WeightUnit.Pounds => $"{weight:0.00} lb",
                 _ => $"{weight:0.00}oz" //default to oz
             };
         }
-    }
+    };
 }

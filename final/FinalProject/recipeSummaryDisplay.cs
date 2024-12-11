@@ -14,7 +14,17 @@ namespace DesertRainSoap.Handlers
             Console.WriteLine("Ingredients:");
             foreach (var ingredient in myRecipe.Ingredients)
             {
-                Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(ingredient.Name)}: {myRecipe.FormatWeight(ingredient.Weight)}");
+                // if recipe unit is %, calculate and display % in oz
+                if (myRecipe.Unit == WeightUnit.Percentage)
+               {
+                    double weightInOunces = ingredient.Weight;
+                    Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(ingredient.Name)}: {UnitConverter.FormatWeight(weightInOunces, WeightUnit.Ounces)}");
+                } 
+                else
+                {
+                    //otherwise, display weight in selected unit
+                    Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(ingredient.Name)}: {myRecipe.FormatWeight(ingredient.Weight)}");
+                }
             }
 
             Console.WriteLine($"- {myRecipe.Lye}: {myRecipe.FormatWeight(myRecipe.CalculateLye(superFat))}"); // display lye type and weight
@@ -22,7 +32,15 @@ namespace DesertRainSoap.Handlers
             Console.WriteLine($"Additives (optional):");
             foreach (var additives in myRecipe.Additives)
             {
-                Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(additives.Name)}: {myRecipe.FormatWeight(additives.Weight)}");
+                if (additives.Name.Equals("Fragrance", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(additives.Name)}: {myRecipe.FormatWeight(additives.Weight)} oz");
+                }
+                else
+                {
+                    double additiveInTsp = AdditiveHandler.ConvertToTeaspoons(additives.Weight);
+                    Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(additives.Name)}: {additiveInTsp:0.00} tsp");
+                }
             }
         }
     }
