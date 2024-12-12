@@ -115,7 +115,11 @@ namespace DesertRainSoap
     }
 }
 
-
-            
-            // var additiveInputHandler = new AdditiveHandler();
-            // additiveInputHandler.AddAdditive(myRecipe, myRecipe.DesiredTotalWeight);
+//chatGPT help links:
+//https://chatgpt.com/share/675b0408-e7c0-800b-913b-14a967aae689
+//https://chatgpt.com/c/6751c5be-772c-800b-9302-138d6cf295a5
+//https://chatgpt.com/g/g-iYSeH3EAI-website-generator/c/67525acf-80c8-800b-b7ac-7313bebc194e
+//https://chatgpt.com/g/g-iYSeH3EAI-website-generator/c/6754a55b-00cc-800b-b44f-72449adfed97
+//https://chatgpt.com/c/675503c8-7034-800b-b586-f9677756babb
+//https://chatgpt.com/g/g-iYSeH3EAI-website-generator/c/6754e25c-bc78-800b-aaa8-481f1ad4110b
+//https://chatgpt.com/g/g-iYSeH3EAI-website-generator/c/6757b85d-5728-800b-bc13-0da1dff20fc0
