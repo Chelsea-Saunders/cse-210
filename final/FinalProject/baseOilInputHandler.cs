@@ -10,7 +10,7 @@ namespace DesertRainSoap.Handlers
         protected void DisplayAvailableOils()
         {
             Console.WriteLine("Available Oils:");
-            foreach (var oil in IngredientRepository.GetOils())
+            foreach (var oil in IngredientsRepository.GetOils())
             {
                 Console.WriteLine($"{oil.Name}");
             }
@@ -18,7 +18,7 @@ namespace DesertRainSoap.Handlers
         //method to validate oil name
         protected bool ValidateOilName(string oilName)
         {
-            return SAPValues.Values.ContainsKey(oilName);
+            return IngredientsRepository.Ingredients.Any(i => i.Name.Equals(oilName, StringComparison.OrdinalIgnoreCase) && i.Type == "oil");
         }
     }
 }

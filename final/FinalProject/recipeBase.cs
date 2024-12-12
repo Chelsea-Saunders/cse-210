@@ -13,6 +13,11 @@ namespace DesertRainSoap.Models
         Pounds, 
         Percentage
     }
+    public enum LyeType
+    {
+        SodiumHydroxide, // NaOH - default
+        PotassiumHydroxide // KOH - liquid soap
+    }
     public class RecipeBase
     {
         private List<Ingredient> _ingredients = new List<Ingredient>();//oils
@@ -47,7 +52,35 @@ namespace DesertRainSoap.Models
             get => _water;
             set 
             {
-                _water = CalcWater.ValidateWaterAmount(value, CalculateLye());
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "Enter a positive number.");
+                };
+                //warning needs more water
+                if (value < CalculateLye())
+                {
+                    Console.WriteLine("WARNING: Not enough water for lye. Increase water amount.");
+                }
+                _water = value;
+            }
+        }
+        public class BaseIngredient
+        {
+            public string Name { get; set; }
+            public double Weight { get; set; }
+
+            public BaseIngredient(string name, double weight)
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    throw new ArgumentException(nameof(name), "Please enter a name.");
+                }
+                if (weight <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(weight), "Please enter a positive number.");
+                }
+                Name = name;
+                Weight = weight;
             }
         }
         //constructor
@@ -56,7 +89,7 @@ namespace DesertRainSoap.Models
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Please enter a name", nameof(name));
                 Name = name;
-            
+                _water = CalculateWater(38.0);
         }
         public string GetWeightUnitName()
         {
@@ -137,24 +170,38 @@ namespace DesertRainSoap.Models
             {
                 throw new ArgumentOutOfRangeException(nameof(superFatPercentage), "Superfat percentage must be between 0-100.");
             }
+
             double totalLye = 0;
+            
             foreach (var ingredient in _ingredients)
             {
-                if (SAPValues.Values.TryGetValue(ingredient.Name, out double sapValue))
+                var ingredientData = IngredientsRepository.Ingredients.FirstOrDefault(i => i.Name.Equals(ingredient.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (ingredientData?.SAPValue != null)
                 {
-                    totalLye += ingredient.Weight * sapValue;
+                    totalLye += ingredient.Weight * (double)ingredientData.SAPValue;
                 }
                 else
                 {
-                    Console.WriteLine($"Warning: No SAP value forund for {ingredient.Name}.");
+                    Console.WriteLine($"SAP value not found for {ingredient.Name}");
                 }
             }
-            totalLye *= 1 - superFatPercentage;
+
+            totalLye *= 1 - superFatPercentage / 100;
             if (_lyeType == LyeType.PotassiumHydroxide)
             {
                 totalLye *= 1.4025;
             }
             return totalLye;
+            }
+
+        public double CalculateWater(double waterPercentage)
+        {
+            if (waterPercentage <= 0 || waterPercentage > 100)
+            {
+                throw new ArgumentOutOfRangeException(nameof(waterPercentage), "Water percentage must be between 0-100.");
+            }
+            return waterPercentage / 100 * _desiredTotalWeight;
         }
         public string FormatWeight(double weight)
         {
@@ -219,6 +266,5 @@ namespace DesertRainSoap.Models
                 Console.WriteLine($"Error saving recipe to {fileName}: {ex.Message}");
             }
         }
-
     }
 }

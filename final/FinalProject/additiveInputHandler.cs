@@ -109,9 +109,9 @@ namespace DesertRainSoap.Handlers
         public void DisplayAvailableAdditives()
         {
             // Console.WriteLine("Available additives:");
-            foreach (var additive in IngredientRepository.GetAdditives())
+            foreach (var additive in IngredientsRepository.GetAdditives())
             {
-                Console.WriteLine($"{additive.Name} (Recommended: {additive.AdditiveRate ?? 0} oz/lb)");
+                Console.WriteLine($"{additive.Name} (Recommended: {additive.UsageRate ?? 0} oz/lb)");
             }
         }
         public static double ConvertToTeaspoons(double totalOilWeight, double tspInput)

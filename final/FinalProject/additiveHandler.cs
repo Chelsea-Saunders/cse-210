@@ -100,9 +100,9 @@ namespace DesertRainSoap
         
         private void DisplayAvailableAdditives()
         {
-            foreach (var additive in IngredientRepository.GetAdditives())
+            foreach (var additive in IngredientsRepository.GetAdditives())
             {
-                Console.WriteLine($"{additive.Name} (Recommended: {additive.AdditiveRate ?? 0} oz/lb)");
+                Console.WriteLine($"{additive.Name} (Recommended: {additive.UsageRate ?? 0} oz/lb)");
             }
         }
         public void AddFragranceAndAdditives(RecipeBase recipe, double totalWeight)

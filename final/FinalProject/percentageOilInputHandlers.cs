@@ -20,7 +20,7 @@ namespace DesertRainSoap.Handlers
                 Console.WriteLine("Enter oil name (or type 'done' to reset oil input):  ");
                 string oilName = Console.ReadLine()?.Trim() ?? string.Empty;
 
-                if (string.IsNullOrEmpty(oilName) || !IngredientRepository.IsValidIngredient(oilName))
+                if (string.IsNullOrEmpty(oilName) || !IngredientsRepository.IsValidIngredient(oilName))
                 {
                     Console.WriteLine("Choose from the oils listed above.");
                     DisplayAvailableOils();
@@ -57,7 +57,7 @@ namespace DesertRainSoap.Handlers
                 Console.WriteLine($"Enter oil name (Remaining: {totalWeight - currentTotalWeight:0.00}):  ");
                 string oilName = Console.ReadLine()?.Trim();
 
-                if (string.IsNullOrEmpty(oilName) || !IngredientRepository.IsValidIngredient(oilName))
+                if (string.IsNullOrEmpty(oilName) || !IngredientsRepository.IsValidIngredient(oilName))
                 {
                     Console.WriteLine("Choose from the oils listed above.");
                     DisplayAvailableOils();
