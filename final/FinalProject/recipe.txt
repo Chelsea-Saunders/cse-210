@@ -1,0 +1,10 @@
+Recipe Name: hand soap
+Lye Type: PotassiumHydroxide
+Total Oil Weight: 32.00oz
+Water: 6.40oz
+Superfat: 7.000000000000001%
+Oils:
+- lard: 16.00oz
+- tallow: 16.00oz
+Additives: 
+- Fragrance: 1.50oz

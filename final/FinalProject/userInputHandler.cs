@@ -34,42 +34,52 @@ namespace DesertRainSoap.Handlers
 
         public static double GetWaterAmount(RecipeBase recipe)
         {
+            double defaultPercentage = 38.0; // default water %
             Console.WriteLine("What % of water would you like to use? (press enter for default (38%)):  ");
             string waterInput = Console.ReadLine()?.Trim();
-            double defaultPercentage = 38.0;//default water %
-
-            //if input is empty:
-            if (string.IsNullOrEmpty(waterInput))
-            {
-                return (defaultPercentage / 100) * recipe.DesiredTotalWeight;
-            }
-
-            // declare waterPercentage
+            
+            //declare water percentage variable
             double waterPercentage;
-            if (double.TryParse(waterInput, out waterPercentage) && waterPercentage > 0)
+
+            //check for empty input
+            if (!string.IsNullOrEmpty(waterInput) && double.TryParse(waterInput, out waterPercentage) && waterPercentage > 0)
             {
-                return (waterPercentage / 100) * recipe.DesiredTotalWeight;
+                double waterWeight = (waterPercentage / 100) * recipe.DesiredTotalWeight;
+                recipe.Water = waterWeight;
+                Console.WriteLine($"Water: {recipe.FormatWeight(recipe.Water)}");
+                return waterWeight;
+            }
+            else
+            {
+                // if invalid, use default %
+                Console.WriteLine($"Invalid input, using default water percentage (38%).");
+                double waterWeight = (defaultPercentage / 100) * recipe.DesiredTotalWeight;
+                recipe.Water = waterWeight;
+                Console.WriteLine($"Water: {recipe.FormatWeight(recipe.Water)}");
+                return waterWeight;
             }
 
-            //if input = invalid, use default value
-            Console.WriteLine("Invalid input. Using default water percentage (38%)");
-            return (defaultPercentage / 100) * recipe.DesiredTotalWeight;
         }
         public static double GetSuperFatPercentage()
         {
-            while (true)
+               // Prompt the user for superfat percentage
+            Console.WriteLine("Superfat % (e.g., below 5% for harsher cleaning, 5-10% for body cleaning, 20-30% for 100% coconut oil soap): ");
+            
+            // Variable to hold the parsed percentage
+            double superFat;
+
+            while (true) // Keep asking until valid input is received
             {
-                double superFat = RecipeInput.GetPercentage(
-                "Superfat % (below 5% for harsher cleaning, 5-10 for body cleaning, 20-30% for 100% coconut oil soap):  "
-                );
-                if (superFat > 30) 
+                string input = Console.ReadLine(); // Read user input
+
+                // Validate input: Check if it's a number between 0 and 30
+                if (double.TryParse(input, out superFat) && superFat >= 0 && superFat <= 30)
                 {
-                    Console.WriteLine("Superfat percentage must be 30% or less.");
+                    return superFat / 100; // Return as a decimal (e.g., 5% -> 0.05)
                 }
-                else
-                {
-                    return superFat / 100;
-                }
+
+                // If invalid, show an error and ask again
+                Console.WriteLine("Invalid input. Please enter a number between 0 and 30.");
             }
         }
     }

@@ -8,8 +8,9 @@ namespace DesertRainSoap.Handlers
     {
         public void AddFragrance(RecipeBase recipe, double totalWeight)
         {
+            // step 1: ask if want frag
             Console.WriteLine("Would you like to add fragrance/essential oils? (yes/no):  ");
-            string response = Console.ReadLine()?.Trim().ToLower();
+            string response = Console.ReadLine()?.Trim();
 
             if (response == "yes")
             {
@@ -19,25 +20,98 @@ namespace DesertRainSoap.Handlers
                     Console.WriteLine("Fragrance/essential oils have already been added.");
                     return;
                 }
-
-                Console.WriteLine("How many oz/lb of oils would you like to add (Check fragrance/essential oil bottle for recommended amounts in soap):  ");
-                if (double.TryParse(Console.ReadLine(), out double ozPerLb) && ozPerLb > 0)
-                {
-                    //caclulate total frag weight
-                    double totalFragranceWeight = ozPerLb * (totalWeight / 16);
-                    // calculate total fragrance weight
-                    recipe.AddAdditive("Fragrance", totalFragranceWeight);
-                    
-                    Console.WriteLine($"Added {totalFragranceWeight:0.00} oz of fragrance/essential oils (at {ozPerLb:0.00} oz/lb oils).");
-                }
                 else
                 {
-                    Console.WriteLine("Invalid input.");
+                    Console.WriteLine("How many oz/lb of oils would you like to add (Check fragrance/essential oil bottle for recommended amounts in soap):  ");
+                    if (double.TryParse(Console.ReadLine(), out double ozPerLb) && ozPerLb > 0)
+                    {
+                        //caclulate total frag weight
+                        double totalFragranceWeight = ozPerLb * (totalWeight / 16);
+                        recipe.AddAdditive("Fragrance", totalFragranceWeight);
+                        
+                        Console.WriteLine($"Added {totalFragranceWeight:0.00} oz of fragrance/essential oils (at {ozPerLb:0.00} oz/lb oils).");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input.");
+                    }
                 }
             }
             else
             {
                 Console.WriteLine("No fragrance/essential oils added.");
+            }  
+        }
+        // public void AddAdditives(string name, double weight)
+        // {
+        //     // step 2 ask about other additives
+        //     Console.WriteLine("Would you like to add any other additives? (yes/no):  ");
+        //     string additivesResponse = Console.ReadLine()?.Trim().ToLower();    
+
+        //     if (additivesResponse == "yes")
+        //     {
+        //         bool addMoreAdditives = true;
+
+        //         while (addMoreAdditives)
+        //         {
+        //             //show additives
+        //             DisplayAvailableAdditives();
+
+        //             //ask for additive name
+        //             Console.WriteLine("Enter the additive name:  ");
+        //             string additiveName = Console.ReadLine()?.Trim();
+        //             if (string.IsNullOrEmpty(additiveName))
+        //             {
+        //                 Console.WriteLine("Enter a name from the list above.");
+        //                 continue;
+        //             }
+        //             //get additive
+        //             var additive = IngredientRepository.GetIngredient(additiveName);
+        //             if (additive == null)
+        //             {
+        //                 Console.WriteLine("Choose additive from list above.");
+        //                 continue;
+        //             }
+
+        //             //display usage rate
+        //             if (additive.AdditiveRate.HasValue)
+        //             {
+        //                 Console.WriteLine($"Recommended usage rate: {additive.AdditiveRate} oz/lb.");
+        //             }
+        //             else 
+        //             {
+        //                 Console.WriteLine("No recommended usage rate available.");
+        //             }
+
+        //             //ask for amount to add
+        //             Console.WriteLine("How much would you like to add?  ");
+        //             if (double.TryParse(Console.ReadLine(), out double amount) && amount > 0)
+        //             {
+        //                 recipe.AddAdditive(additiveName, amount);
+        //                 Console.WriteLine($"Added {amount:0.00} oz of {additiveName}.");
+        //             }
+        //             else
+        //             {
+        //                 Console.WriteLine("Invalid input. Additive not added.");
+        //             }
+        //             //ask if adding more additives
+        //             Console.WriteLine("Would you like to add more additives? (yes/no):  ");
+        //             string addAnother = Console.ReadLine()?.Trim().ToLower();
+        //             addMoreAdditives = addAnother == "yes";
+        //         }
+        //     }
+        //     else
+        //     {
+        //         Console.WriteLine("No additives added.");
+        //     }
+        // }
+            
+        public void DisplayAvailableAdditives()
+        {
+            // Console.WriteLine("Available additives:");
+            foreach (var additive in IngredientRepository.GetAdditives())
+            {
+                Console.WriteLine($"{additive.Name} (Recommended: {additive.AdditiveRate ?? 0} oz/lb)");
             }
         }
         public static double ConvertToTeaspoons(double totalOilWeight, double tspInput)
@@ -46,75 +120,3 @@ namespace DesertRainSoap.Handlers
         }
     }
 }   
-
-// Things to add later:
-        // public void AddAdditive(RecipeBase recipe, double totalWeight, double totalOilWeight)
-        // {
-        //     Console.WriteLine("Would you like to add additives? (yes/no):  ");
-        //     string response = Console.ReadLine()?.Trim().ToLower();
-
-        //     if (response == "yes")
-        //     {
-        //         while (true)
-        //         {
-        //             Console.WriteLine("Available additives:");
-        //             foreach (var additive in Additive.Values.Keys)
-        //             {
-        //                 Console.WriteLine($"{additive} (Recommended usage: {Additive.Values[additive]} tsp/lb of oils)");
-        //             }
-        //             Console.WriteLine("Enter additive name (or type 'done' to finish):  ");
-        //             string additiveName = Console.ReadLine()?.Trim().ToLower() ?? string.Empty;
-
-        //             if (additiveName.Equals("done", StringComparison.OrdinalIgnoreCase))
-        //             {
-        //                 break;
-        //             }
-        //             if (!Additive.Values.ContainsKey(additiveName))
-        //             {
-        //                 Console.WriteLine("Invalid additive name.");
-        //                 continue;
-        //             }
-
-        //             //duplicates?
-        //             if (recipe.Additives.Any(a => a.Name.Equals(additiveName, StringComparison.OrdinalIgnoreCase)))
-        //             {
-        //                 Console.WriteLine($"{additiveName} has already been added.");
-        //                 continue;
-        //             }
-        //             Console.WriteLine($"How many tsp/lb of {additiveName}:  ");
-        //             string tspInput = Console.ReadLine()?.Trim();
-        //             bool isValidNumber = double.TryParse(tspInput, out double tspPerLb);
-
-        //             if (isValidNumber && tspPerLb > 0)
-        //             // if (double.TryParse(Console.ReadLine(), out double tspPerLb) && tspPerLb > 0)
-        //             {
-        //                 double additiveInTsp = AdditiveHandler.ConvertToTeaspoons(totalOilWeight, tspPerLb);
-        //                 //convert total oil wieght to lbs
-        //                 // double totalWeightInOunces = totalWeight;
-        //                 double totalWeightInPounds = totalWeight /  16.0; // convert total weight to lbs
-
-        //                 // calculate total additve weight in tsp
-        //                 double totalAdditiveWeight = tspPerLb * totalWeightInPounds;
-
-        //                 //round
-        //                 totalAdditiveWeight = Math.Round(totalAdditiveWeight, 2);
-
-        //                 //title case the additive name
-        //                 string titleCaseAdditiveName = char.ToUpper(additiveName[0]) + additiveName.Substring(1);
-
-        //                 // add calculated additve tsp to recipe
-        //                 recipe.AddAdditive(titleCaseAdditiveName, totalAdditiveWeight);
-
-        //                 Console.WriteLine($"Added {totalAdditiveWeight:0.00} tsp of {titleCaseAdditiveName}.");
-        //             }
-        //             else
-        //             {
-        //                 Console.WriteLine("Invalid input.");
-        //             }
-        //         }
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("No additives added.");
-        //     }
-        // }

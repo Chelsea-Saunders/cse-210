@@ -25,6 +25,7 @@ namespace DesertRainSoap.Models
         public IReadOnlyList<Ingredient> Ingredients => _ingredients; //read only access to ingredients list
         public IReadOnlyCollection<Ingredient> Additives => _additives; //read only access to additives list
         public WeightUnit Unit { get; set; } = WeightUnit.Ounces; //default unit is oz
+        public double Superfat { get; set; } //property to store superfat percentage
         public LyeType Lye 
         {
             get => _lyeType;
@@ -187,32 +188,37 @@ namespace DesertRainSoap.Models
         }
 
         //save to file
-        public void SaveFile(string fileName, List<string> recipe)
+        public void SaveToFile(string fileName)
         {
-            Console.WriteLine("Would you like to save this recipe to a file? (yes/no):  ");
-            string saveInput = Console.ReadLine()?.Trim().ToLower();
+            List<string> lines = new List<string>
+            {
+                $"Recipe Name: {Name}",
+                $"Lye Type: {Lye}",
+                $"Total Oil Weight: {FormatWeight(DesiredTotalWeight)}",
+                $"Water: {FormatWeight(Water)}",
+                $"Superfat: {Superfat * 100}%",
+                "Oils:"
+            };
+            //add ingredients to file
+            lines.AddRange(Ingredients.Select(i => $"- {i.Name}: {FormatWeight(i.Weight)}"));
 
-            if (saveInput == "yes")
+            //add addtives to file
+            if (Additives.Any())
             {
-                try
-                {
-                    if (string.IsNullOrWhiteSpace(fileName))
-                    {
-                        Console.WriteLine("Invalid name. File not saved. ");
-                        return;
-                    }
-                    File.WriteAllLines(fileName, recipe);
-                    Console.WriteLine($"Recipe saved to {fileName}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error saving file: {ex.Message}");
-                }
+                lines.Add("Additives: ");
+                lines.AddRange(Additives.Select(a => $"- {a.Name}: {FormatWeight(a.Weight)}"));
             }
-            else
+            //write/save to file
+            try
             {
-                Console.WriteLine("Recipe did not save.");
+                File.WriteAllLines(fileName, lines);
+                Console.WriteLine($"Recipe saved to {fileName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving recipe to {fileName}: {ex.Message}");
             }
         }
+
     }
 }

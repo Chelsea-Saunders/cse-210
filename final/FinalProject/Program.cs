@@ -62,30 +62,55 @@ namespace DesertRainSoap
             Console.WriteLine($"Total oil weight: {UnitConverter.FormatWeight(myRecipe.DesiredTotalWeight, myRecipe.Unit)}");
             
             // step 5: get water amount
-            double waterWeight = UserInputHandler.GetWaterAmount(myRecipe);
-            myRecipe.Water = waterWeight;
-            Console.WriteLine($"Water: {myRecipe.FormatWeight(myRecipe.Water)}");
+            UserInputHandler.GetWaterAmount(myRecipe);
 
             // step 6: superfat percentage
-            double superFat = UserInputHandler.GetSuperFatPercentage();
+            myRecipe.Superfat = UserInputHandler.GetSuperFatPercentage();
 
             // step 7: add oils
-            IOilInputHandler oilInputHandler = myRecipe.Unit == WeightUnit.Percentage
-                ? new PercentageOilInputHandler()
-                : new WeightOilInputHandler();
-
+            IOilInputHandler oilInputHandler ;
+            if (myRecipe.Unit == WeightUnit.Percentage)
+            {
+                oilInputHandler = new PercentageOilInputHandler();
+            }
+            else 
+            {
+                oilInputHandler = new WeightOilInputHandler();
+            }
             oilInputHandler.AddOils(myRecipe, myRecipe.DesiredTotalWeight, myRecipe.Unit);
 
-            // step 8: add fragrance
-            var additiveInputHandler = new AdditiveHandler();
-            additiveInputHandler.AddFragrance(myRecipe, myRecipe.DesiredTotalWeight);
+            // step 8: add fragrance and additives
+            var additiveHandler = new AdditiveHandler();
+            additiveHandler.AddFragranceAndAdditives(myRecipe, myRecipe.DesiredTotalWeight);
 
             // final recipe summary
             IRecipeFormatter recipeFormatter = new RecipeSummaryDisplay();
-            recipeFormatter.DisplayRecipeSummary(myRecipe, superFat, myRecipe.DesiredTotalWeight, 0);
+            recipeFormatter.DisplayRecipeSummary(myRecipe, myRecipe.Superfat, myRecipe.DesiredTotalWeight, 0);
 
             //save to file
-            
+            // Prompt user to save the recipe
+            Console.WriteLine("Would you like to save the recipe to a file? (yes/no): ");
+            string saveResponse = Console.ReadLine()?.Trim().ToLower();
+
+            if (saveResponse == "yes")
+            {
+                Console.WriteLine("Enter a file name (e.g., recipe.txt): ");
+                string fileName = Console.ReadLine()?.Trim();
+
+                if (!string.IsNullOrWhiteSpace(fileName))
+                {
+                    myRecipe.SaveToFile(fileName);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid file name. Recipe not saved.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Recipe not saved.");
+            }
+
         }
     }
 }

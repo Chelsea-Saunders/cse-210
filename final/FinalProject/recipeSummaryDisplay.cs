@@ -42,6 +42,13 @@ namespace DesertRainSoap.Handlers
                     Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(additives.Name)}: {additiveInTsp:0.00} tsp");
                 }
             }
+            // foreach (var additives in myRecipe.Additives)
+            // {
+            //     if (additives.Name.Equals("Additive", StringComparison.OrdinalIgnoreCase))
+            //     {
+            //         Console.WriteLine($"- {RecipeBase.StringUtility.ToTitleCase(additives.Name)}: {myRecipe.FormatWeight(additives.Amount):0.00} oz");
+            //     }
+            // }
         }
     }
 }
